@@ -1,0 +1,8 @@
+<div class="countdown container">
+    <div class="row">
+        <app-title [clock]="clock"></app-title>
+    </div>
+    <div class="clock row">
+        <app-timer *ngFor="let timer of timers" [timer]="timer" class="col-sm-6 col-md-3"></app-timer>
+    </div>
+</div>

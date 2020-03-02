@@ -1,0 +1,21 @@
+<div class="clock-item clock-hours countdown-time-value ">
+    <div class="wrap">
+        <div class="inner">
+            <div id="canvas-hours" class="clock-canvas"></div>
+            <div class="text">
+                <p class="val">{{state}}</p>
+                <p class="type-time">{{timer.title}}</p>
+            </div>
+            <svg class="progress-ring">
+                <circle #circle 
+                    class="progress-ring__circle"
+                    stroke-width="8"
+                    fill="transparent"
+                    r="48%"
+                    cx="50%"
+                    cy="50%"/>
+            </svg>
+        </div>
+    </div>
+</div>
+

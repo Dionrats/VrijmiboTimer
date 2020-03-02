@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, AfterViewInit, EventEmitter } from '@angular/core';
+import { Clock } from './models/clock.model';
 
 @Component({
   selector: 'app-root',

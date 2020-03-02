@@ -19,6 +19,10 @@
     "@angular/platform-browser": "~9.0.2",
     "@angular/platform-browser-dynamic": "~9.0.2",
     "@angular/router": "~9.0.2",
+    "bootstrap": "^4.4.1",
+    "bower": "^1.8.8",
+    "cuppa-ng2-slidemenu": "^2.0.0",
+    "ngx-countdown": "^8.0.3",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
