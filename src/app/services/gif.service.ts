@@ -10,7 +10,7 @@ import { giphyResonseDataPartial } from '../models/giphyResponseDataPartial.mode
 export class GifService {
 
   private giffOffset: number = 25;
-  private apiKey: string = 'giCw4wRipPDvGIroMwxXpZCvJN5QkQMN';
+  private apiKey: string = '';
 
   constructor(private http: HttpClient) { }
 
