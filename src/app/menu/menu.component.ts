@@ -17,7 +17,8 @@ export class MenuComponent implements OnInit {
   public clocks: Clock[] = [
     {name: 'Vrijmibo', target: {weekday: 5, hour: 16, minute: 0, second: 0}, active: true},
     {name: 'Partytime', target: {weekday: this._dayService.getCurrentDayIndex(), hour: 16, minute: 0, second: 0}},
-    {name: 'Doner', target: {weekday: 5, hour: 12, minute: 0, second: 0}, specialName: 'DÖNERTIJD'}
+    {name: 'Doner', target: {weekday: 5, hour: 12, minute: 0, second: 0}, specialName: 'DÖNERTIJD'},
+    {name: 'Kempel', target: {weekday: 5, hour: 15, minute: 0, second: 0}, specialName: 'Einde BlokStage'}
   ];
 
   constructor(private _dayService: DayService, private _optionsService: OptionsService) { }
