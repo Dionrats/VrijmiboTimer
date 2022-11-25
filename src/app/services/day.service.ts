@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Clock } from '../models/clock.model';
+import {Injectable} from '@angular/core';
+import {Clock} from '../models/clock.model';
 
 @Injectable()
 export class DayService {
@@ -8,24 +8,24 @@ export class DayService {
 
 
   public getMiboDay(clock: Clock): string {
-    if(clock.specialName) {
+    if (clock.specialName) {
       return clock.specialName;
     }
-    switch(clock.target.weekday){
+    switch (clock.target.weekday) {
       case 1:
-        return "MAMIBO"
+        return 'MAMIBO';
       case 2:
-        return "DIMIBO"
+        return 'DIMIBO';
       case 3:
-        return "WOMIBO"
+        return 'WOMIBO';
       case 4:
-        return "DOMIBO"
+        return 'DOMIBO';
       case 5:
-        return "VRIJMIBO"
+        return 'VRIJMIBO';
       case 6:
-        return "ZAMIBO"
+        return 'ZAMIBO';
       case 7:
-        return "ZOMIBO"
+        return 'ZOMIBO';
     }
   }
 

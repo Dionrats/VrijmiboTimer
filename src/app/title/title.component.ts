@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Clock } from '../models/clock.model';
-import { DayService } from '../services/day.service';
-import { OptionsService } from '../services/options.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {Clock} from '../models/clock.model';
+import {DayService} from '../services/day.service';
+import {OptionsService} from '../services/options.service';
 
 @Component({
   selector: 'app-title',
@@ -11,14 +11,14 @@ import { OptionsService } from '../services/options.service';
 export class TitleComponent implements OnInit {
 
   @Input()
-  public clock: Clock; 
+  public clock: Clock;
   public title: string;
 
-  constructor(private _dayService: DayService, private _optionsService: OptionsService) { }
+  constructor(private dayService: DayService, private optionsService: OptionsService) { }
 
   ngOnInit(): void {
-    this.title = this._dayService.getMiboDay(this.clock);
-    this._optionsService.currentClock.subscribe(clock => this.title = this._dayService.getMiboDay(clock));
+    this.title = this.dayService.getMiboDay(this.clock);
+    this.optionsService.currentClock.subscribe(clock => this.title = this.dayService.getMiboDay(clock));
   }
 
 }

@@ -1,6 +1,16 @@
-import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef, AfterViewInit, AfterViewChecked } from '@angular/core';
-import { Timer } from '../models/timer.model';
-import { Subscription } from 'rxjs';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+import {Timer} from '../models/timer.model';
+import {Subscription} from 'rxjs';
 
 
 @Component({
@@ -8,17 +18,17 @@ import { Subscription } from 'rxjs';
   templateUrl: './timer.component.html',
   styleUrls: ['./timer.component.sass']
 })
-export class TimerComponent implements OnInit, OnDestroy, AfterViewChecked, AfterViewInit {
+export class TimerComponent implements OnInit, OnDestroy, AfterViewInit, AfterViewChecked {
 
-  @Input("timer")
+  @Input('timer')
   timer: Timer;
   state: number;
   subscription: Subscription;
 
-  @ViewChild("circle", {static: false})
-  circle: ElementRef
+  @ViewChild('circle', {static: false})
+  circle: ElementRef;
 
-  constructor() {
+  constructor(private changeDetectorRef: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -34,12 +44,16 @@ export class TimerComponent implements OnInit, OnDestroy, AfterViewChecked, Afte
   }
 
   ngAfterViewChecked(): void {
-    let percent = 100 - this.remap(this.state, 0, this.timer.max, 0, 100);
+    const percent = this.remap(this.state, 0, this.timer.max, 0, 100);
     this.renderCircle(percent);
   }
 
   public run(): void {
-    this.subscription = this.timer.heartbeat.subscribe(x => this.state = x);
+    this.subscription = this.timer.heartbeat.subscribe(x => {
+      this.state = x;
+      this.changeDetectorRef.detectChanges();
+      return this.state;
+    });
   }
 
   public stop(): void {
@@ -48,11 +62,11 @@ export class TimerComponent implements OnInit, OnDestroy, AfterViewChecked, Afte
   }
 
   private renderCircle(percent: number): void {
-    let radius = this.circle.nativeElement.r.baseVal.value;
-    let circumference = radius * 2 * Math.PI;
-    let offset = circumference - percent / 100 * circumference;
+    const radius = this.circle.nativeElement.r.baseVal.value;
+    const circumference = radius * 2 * Math.PI;
+    const offset = circumference - percent / 100 * circumference;
 
-    this.circle.nativeElement.style.strokeDasharray = circumference + " " + circumference;
+    this.circle.nativeElement.style.strokeDasharray = circumference + ' ' + circumference;
     this.circle.nativeElement.style.strokeDashoffset = offset;
   }
 

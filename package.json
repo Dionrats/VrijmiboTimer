@@ -2,12 +2,12 @@
   "name": "vrijmibo",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "ng": "NODE_OPTIONS=--openssl-legacy-provider ng",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider ng serve",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider ng build",
+    "test": "NODE_OPTIONS=--openssl-legacy-provider ng test",
+    "lint": "NODE_OPTIONS=--openssl-legacy-provider ng lint",
+    "e2e": "NODE_OPTIONS=--openssl-legacy-provider ng e2e"
   },
   "private": true,
   "dependencies": {

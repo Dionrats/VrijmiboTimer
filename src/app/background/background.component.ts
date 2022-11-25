@@ -1,6 +1,6 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
-import { GifService } from '../services/gif.service';
-import { OptionsService } from '../services/options.service';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {GifService} from '../services/gif.service';
+import {OptionsService} from '../services/options.service';
 
 @Component({
   selector: 'app-background',
@@ -10,21 +10,21 @@ import { OptionsService } from '../services/options.service';
 export class BackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('gif', {static: false})
-  gif: ElementRef
+  gif: ElementRef;
 
-  private gifContext: string = 'cheers';
+  private gifContext = 'cheers';
   private interval: number = 2 * 60 * 1000;
   private runner: any;
 
-  constructor(private _gifService: GifService, private _optionsService: OptionsService) { }
+  constructor(private gifService: GifService, private optionsService: OptionsService) { }
 
   ngOnInit(): void {
-   
+
   }
 
   ngAfterViewInit(): void {
     this.updateGif(this.gifContext);
-    this._optionsService.currentGifContext.subscribe(newGifContext => {
+    this.optionsService.currentGifContext.subscribe(newGifContext => {
       this.gifContext = newGifContext;
       this.updateGif(this.gifContext);
     });
@@ -36,7 +36,7 @@ export class BackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private updateGif(gifContext: string): void {
-     this._gifService.getNext(gifContext, data => {
+     this.gifService.getNext(gifContext, data => {
       this.gif.nativeElement.style.backgroundImage = 'URL("' + data.images.original.url + '")';
      });
   }

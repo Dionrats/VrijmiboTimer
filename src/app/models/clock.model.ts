@@ -1,8 +1,8 @@
-import { Target } from './target.model';
+import {Target} from './target.model';
 
 export class Clock {
     name: string;
-    active?: boolean = false;
+    active = false;
     target: Target;
     specialName?: string;
 }

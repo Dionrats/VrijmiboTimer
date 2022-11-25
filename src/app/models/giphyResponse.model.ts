@@ -1,7 +1,7 @@
-import { giphyResonseDataPartial } from './giphyResponseDataPartial.model';
+import {GiphyResponseDataPartial} from './giphyResponseDataPartial.model';
 
 export interface giphyResponse {
-    data: giphyResonseDataPartial[];
+    data: GiphyResponseDataPartial[];
     pagination: any;
     meta: any;
 }
