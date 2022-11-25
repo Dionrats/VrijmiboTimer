@@ -1,7 +1,7 @@
-import { EventEmitter } from '@angular/core';
+import {EventEmitter} from '@angular/core';
 
-export interface Timer{
-    title: string; 
+export interface Timer {
+    title: string;
     max: number;
     color: string;
     heartbeat: EventEmitter<number>;
