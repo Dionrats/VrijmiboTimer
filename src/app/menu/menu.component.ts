@@ -15,8 +15,8 @@ export class MenuComponent implements OnInit {
   public sidenav: ElementRef;
 
   public clocks: Clock[] = [
-    {name: 'Vrijmibo', target: {weekday: 5, hour: 16, minute: 0, second: 0}, active: true},
-    {name: 'Partytime', target: {weekday: this.dayService.getCurrentDayIndex(), hour: 16, minute: 0, second: 0}, active: false},
+    {name: 'Vrijmibo', target: {weekday: 5, hour: 16, minute: 30, second: 0}, active: true},
+    {name: 'Partytime', target: {weekday: this.dayService.getCurrentDayIndex(), hour: 16, minute: 30, second: 0}, active: false},
   ];
 
   constructor(private dayService: DayService, private optionsService: OptionsService) { }
