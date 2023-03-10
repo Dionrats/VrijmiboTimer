@@ -45,11 +45,17 @@ export class ClockComponent implements OnInit, AfterViewInit, OnDestroy {
     this.soundAlarm();
   }
 
-  private soundAlarm(): void {
+  public soundAlarm(): void {
     const audio: HTMLAudioElement = new Audio();
+    const song: HTMLAudioElement = new Audio();
     audio.src = '/assets/sound/Air-Horn-Sound-Effect.mp3';
+    song.src = '/assets/sound/dikkeleo.mp4';
     audio.load();
     audio.play();
+    setTimeout(() => {
+      song.load();
+      song.play();
+    }, 2000);
   }
 
   public startClock(): void {
