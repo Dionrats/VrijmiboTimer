@@ -18,7 +18,7 @@ export class ClockComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private done: Subscription;
 
-  public clock: Clock = {name: 'Vrijmibo', target: {weekday: 5, hour: 16, minute: 0, second: 0}, active: true};
+  public clock: Clock = {name: 'Vrijmibo', target: {weekday: 5, hour: 16, minute: 30, second: 0}, active: true};
 
   timers: Timer[] = [
     {title: 'dagen', max: 7, color: '#d86b6b', heartbeat: this.heartbeatService.dayHeartbeat},
