@@ -1,7 +1,9 @@
-import {Injectable} from '@angular/core';
-import {Clock} from '../models/clock.model';
+import { Injectable } from '@angular/core';
+import { Clock } from '../models/clock.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DayService {
 
   constructor() { }
@@ -26,6 +28,8 @@ export class DayService {
         return 'ZAMIBO';
       case 7:
         return 'ZOMIBO';
+      default:
+        return '';
     }
   }
 

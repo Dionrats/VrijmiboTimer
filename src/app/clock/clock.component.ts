@@ -1,17 +1,21 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChildren} from '@angular/core';
-import {TimerComponent} from '../timer/timer.component';
-import {Timer} from '../models/timer.model';
-import {Subscription} from 'rxjs';
-import {Clock} from '../models/clock.model';
-import {HeartbeatService} from '../services/heartbeat.service';
-import {OptionsService} from '../services/options.service';
+import { Component, ViewChildren } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
+import { TimerComponent } from '../timer/timer.component';
+import { Clock } from '../models/clock.model';
+import { Timer } from '../models/timer.model';
+import { HeartbeatService } from '../services/heartbeat.service';
+import { OptionsService } from '../services/options.service';
+import { TitleComponent } from "../title/title.component";
 
 @Component({
-  selector: 'app-clock',
-  templateUrl: './clock.component.html',
-  styleUrls: ['./clock.component.sass']
+    selector: 'app-clock',
+    standalone: true,
+    templateUrl: './clock.component.html',
+    styleUrls: ['./clock.component.sass'],
+    imports: [CommonModule, TitleComponent, TimerComponent]
 })
-export class ClockComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ClockComponent {
 
   @ViewChildren(TimerComponent)
   timerComponents: TimerComponent[];

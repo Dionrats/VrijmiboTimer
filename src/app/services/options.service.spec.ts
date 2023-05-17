@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
+
 import { OptionsService } from './options.service';
 
-
-describe('ClockService', () => {
+describe('OptionsService', () => {
   let service: OptionsService;
 
   beforeEach(() => {

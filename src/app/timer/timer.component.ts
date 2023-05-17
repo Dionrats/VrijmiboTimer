@@ -1,27 +1,18 @@
-import {
-  AfterViewChecked,
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  Input,
-  OnDestroy,
-  OnInit,
-  ViewChild
-} from '@angular/core';
-import {Timer} from '../models/timer.model';
-import {Subscription} from 'rxjs';
-
+import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Timer } from '../models/timer.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-timer',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './timer.component.html',
   styleUrls: ['./timer.component.sass']
 })
-export class TimerComponent implements OnInit, OnDestroy, AfterViewInit, AfterViewChecked {
+export class TimerComponent {
 
-  @Input('timer')
-  timer: Timer;
+  @Input('timer') timer: Timer;
   state: number;
   subscription: Subscription;
 

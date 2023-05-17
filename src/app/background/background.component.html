@@ -1,3 +1,9 @@
-<div #gif class="gif">
+<div *ngIf="currentGifChoice === 'Giphy'" #gif class="gif">
     <div class="overlay"></div>
+</div>
+<div *ngIf="currentGifChoice === 'Personal'">
+    <video autoplay loop id="myVideo">
+        <source src="{{custom}}" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
 </div>

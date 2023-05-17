@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {giphyResponse} from '../models/giphyResponse.model';
-import {Observable} from 'rxjs';
-import {GiphyResponseDataPartial} from '../models/giphyResponseDataPartial.model';
+import { giphyResponse } from '../models/giphyResponse.model';
+import { GiphyResponseDataPartial } from '../models/giphyResponseDataPartial.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

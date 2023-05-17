@@ -38,8 +38,17 @@
                 </li>
                 <li>
                     <a href="#">
-                        <button type="button" (click)="resetClock()">Reset klok</button> 
+                        <button type="button" (click)="resetClock()">Reset klok</button>
                     </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#gifChoiceSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Gif</a>
+            <ul class="collapse list-unstyled" id="gifChoiceSubmenu">
+                <li *ngFor="let gifChoice of gifChoices" (click)="selectGifChoice(gifChoice)">
+                    <a href="#" class="active" *ngIf="gifChoice.active;else notactive">{{gifChoice.name}}</a>
+                    <ng-template #notactive><a href="#" #notactive>{{gifChoice.name}}</a></ng-template>
                 </li>
             </ul>
         </li>

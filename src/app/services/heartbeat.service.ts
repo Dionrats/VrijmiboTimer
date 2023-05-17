@@ -1,7 +1,9 @@
-import {EventEmitter, Injectable} from '@angular/core';
-import {Target} from '../models/target.model';
+import { EventEmitter, Injectable } from '@angular/core';
+import { Target } from '../models/target.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class HeartbeatService {
 
   private interval = 999;
@@ -80,7 +82,4 @@ export class HeartbeatService {
 
   private inDays(millis: number): number {
     return Math.floor(millis / 1000 / 60 / 60 / 24 % 7);
-  }
-
-
-}
+  }}
