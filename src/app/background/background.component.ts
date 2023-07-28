@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { GifService } from '../services/gif.service';
 import { OptionsService } from '../services/options.service';
 import { GifChoiceConstant } from '../models/gif-choice-constant';
+import { DikkeLeoService } from '../services/dikke-leo.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-background',
@@ -22,6 +24,9 @@ export class BackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
   private gifChoice: GifChoiceConstant;
   public custom: string;
   public currentGifChoice: string = 'Giphy';
+  private done: Subscription;
+  public video: HTMLMediaElement;
+  public gifTimeout;
 
   private personalGifs: string[] = [
     '/assets/personalgifs/1.mp4',
@@ -37,7 +42,10 @@ export class BackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
     '/assets/personalgifs/11.mp4'
   ]
 
-  constructor(private gifService: GifService, private optionsService: OptionsService) { }
+  constructor(private gifService: GifService, private optionsService: OptionsService, private dikkeLeoService: DikkeLeoService) {
+  this.done =   this.dikkeLeoService.getClickEvent().subscribe(()=>{
+    this.startDikkeLeo();
+    })}
 
   ngOnInit(): void {
   }
@@ -68,6 +76,28 @@ export class BackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
   private startPersonalGifCarousel(): void {
     const myGifUrl = '/assets/personalgifs/10.mp4';
     this.custom = myGifUrl;
+    this.updatePersonalGif();
+  }
+
+  private updatePersonalGif():void{
+    this.gifTimeout = setTimeout(() => {
+    var number = Math.floor(Math.random() * this.personalGifs.length);
+    this.personalGifs[number];
+    this.video = document.getElementById("myVideo") as HTMLMediaElement;
+    this.video.src = this.personalGifs[number];
+    this.video.play();
+    this.updatePersonalGif();
+    }, 5000);
+  }
+  
+  public startDikkeLeo(): void {
+    clearTimeout(this.gifTimeout)
+    this.video = document.getElementById("myVideo") as HTMLMediaElement;
+    this.video.src = '/assets/sound/dikkeleo.mp4';
+    this.video.play();
+    setTimeout(() => {
+      this.updatePersonalGif();
+    }, 200000);
   }
 
   private updateGif(gifContext: string): void {
