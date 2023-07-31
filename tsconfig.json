@@ -17,10 +17,10 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
-    "module": "es2015",
+    "module": "ESNext",
     "useDefineForClassFields": false,
     "lib": [
-      "ES2022",
+      "ES2018",
       "dom"
     ],
     "noImplicitAny": false,
