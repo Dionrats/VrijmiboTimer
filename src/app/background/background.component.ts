@@ -18,7 +18,7 @@ export class BackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
   gif: ElementRef;
 
   private gifContext = 'cheers';
-  private interval: number = 0.2 * 60 * 1000;
+  private interval: number = 1 * 60 * 1000;
   private runner: any;
   private dikkeLeoRunner: any;
 
