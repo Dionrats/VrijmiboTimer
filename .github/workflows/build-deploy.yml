@@ -37,6 +37,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Override default env variable
+        run: |
+          echo "PAGES_REPO=${{ vars.PAGES_REPO }}"
+        if: vars.PAGES_REPO != ''
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
