@@ -22,7 +22,6 @@ export class BackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
   private runner: any;
   private dikkeLeoRunner: any;
 
-
   public currentGifProvider: string;
 
   constructor(private gifProvider: GifProviderService, private optionsService: OptionsService, private dikkeLeoService: DikkeLeoService) {
@@ -58,17 +57,14 @@ export class BackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
   public async startDikkeLeo() {
     clearInterval(this.runner);
     const vid = document.getElementById("myVideo") as HTMLMediaElement;
-    // vid.style.zIndex = '0';
     vid.src = '/assets/sound/dikkeleo.mp4';
     await vid.play();
 
-    console.log("start")
-    console.log(this.currentGifProvider);
-
     this.dikkeLeoRunner = setTimeout(() => {
-      console.log("end")
-      console.log(this.currentGifProvider);
-      // vid.style.zIndex = '-1';
+      vid.pause();
+      vid.currentTime = 0;
+      vid.src = null;
+
       this.setTimer();
       this.updateGif(this.gifContext);
       clearTimeout(this.dikkeLeoRunner);
@@ -87,14 +83,5 @@ export class BackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private showGif(src: string) {
     this.gif.nativeElement.style.backgroundImage = 'URL("' + src + '")';
-  }
-
-  private moveUp(element: HTMLElement) {
-    if(element.previousElementSibling)
-      element.parentNode.insertBefore(element, element.previousElementSibling);
-  }
-  private moveDown(element: HTMLElement) {
-    if(element.nextElementSibling)
-      element.parentNode.insertBefore(element.nextElementSibling, element);
   }
 }
