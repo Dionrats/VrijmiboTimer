@@ -1,10 +1,9 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GifService } from '../services/gif.service';
 import { OptionsService } from '../services/options.service';
 import { GifChoiceConstant } from '../models/gif-choice-constant';
 import { DikkeLeoService } from '../services/dikke-leo.service';
-import { Subscription } from 'rxjs';
+import { GifProviderService } from '../services/gif-provider.service';
 
 @Component({
   selector: 'app-background',
@@ -19,33 +18,19 @@ export class BackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
   gif: ElementRef;
 
   private gifContext = 'cheers';
-  //private interval: number = 2 * 60 * 1000;
-  //private runner: any;
-  private gifChoice: GifChoiceConstant;
-  public custom: string;
-  public currentGifChoice: string = 'Giphy';
-  private done: Subscription;
-  public video: HTMLMediaElement;
-  public gifTimeout;
+  private interval: number = 0.2 * 60 * 1000;
+  private runner: any;
+  private dikkeLeoRunner: any;
 
-  private personalGifs: string[] = [
-    '/assets/personalgifs/1.mp4',
-    '/assets/personalgifs/2.mp4',
-    '/assets/personalgifs/3.mp4',
-    '/assets/personalgifs/4.mp4',
-    '/assets/personalgifs/5.mp4',
-    '/assets/personalgifs/6.mp4',
-    '/assets/personalgifs/7.mp4',
-    '/assets/personalgifs/8.mp4',
-    '/assets/personalgifs/9.mp4',
-    '/assets/personalgifs/10.mp4',
-    '/assets/personalgifs/11.mp4'
-  ]
+  public currentGifProvider: string;
 
-  constructor(private gifService: GifService, private optionsService: OptionsService, private dikkeLeoService: DikkeLeoService) {
-  this.done =   this.dikkeLeoService.getClickEvent().subscribe(()=>{
-    this.startDikkeLeo();
-    })}
+  constructor(private gifProvider: GifProviderService, private optionsService: OptionsService, private dikkeLeoService: DikkeLeoService) {
+    this.dikkeLeoService.getClickEvent().subscribe(()=>{
+      if (this.currentGifProvider === GifChoiceConstant.Personal) {
+        this.startDikkeLeo();
+      }
+    })
+  }
 
   ngOnInit(): void {
   }
@@ -57,52 +42,46 @@ export class BackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
       this.updateGif(this.gifContext);
     });
     this.optionsService.currentGifChoice.subscribe(newGifChoice => {
-      this.gifChoice = newGifChoice;
-      this.currentGifChoice = newGifChoice;
-      if (this.gifChoice === GifChoiceConstant.Personal) {
-        this.startPersonalGifCarousel();
-      }
-      else if (this.gifChoice === GifChoiceConstant.Giphy) {
-        this.updateGif(this.gifContext);
-      }
+      this.currentGifProvider = newGifChoice;
+      this.gifProvider.set(newGifChoice);
+      this.updateGif(this.gifContext);
     })
-    //this.runner = setInterval(() => { this.updateGif(this.gifContext); console.log('update'); }, this.interval);
+
+    this.setTimer();
   }
 
   ngOnDestroy(): void {
-    //clearInterval(this.runner);
+    clearInterval(this.runner);
   }
 
-  private startPersonalGifCarousel(): void {
-    const myGifUrl = '/assets/personalgifs/10.mp4';
-    this.custom = myGifUrl;
-    this.updatePersonalGif();
-  }
+  public async startDikkeLeo() {
+    clearInterval(this.runner);
+    const vid = document.getElementById("myVideo") as HTMLMediaElement;
+    vid.src = '/assets/sound/dikkeleo.mp4';
+    await vid.play();
 
-  private updatePersonalGif():void{
-    this.gifTimeout = setTimeout(() => {
-    var number = Math.floor(Math.random() * this.personalGifs.length);
-    this.personalGifs[number];
-    this.video = document.getElementById("myVideo") as HTMLMediaElement;
-    this.video.src = this.personalGifs[number];
-    this.video.play();
-    this.updatePersonalGif();
-    }, 5000);
-  }
-  
-  public startDikkeLeo(): void {
-    clearTimeout(this.gifTimeout)
-    this.video = document.getElementById("myVideo") as HTMLMediaElement;
-    this.video.src = '/assets/sound/dikkeleo.mp4';
-    this.video.play();
-    setTimeout(() => {
-      this.updatePersonalGif();
+    this.dikkeLeoRunner = setTimeout(() => {
+      vid.pause();
+      vid.currentTime = 0;
+      vid.src = null;
+
+      this.setTimer();
+      this.updateGif(this.gifContext);
+      clearTimeout(this.dikkeLeoRunner);
     }, 200000);
   }
 
+  private setTimer() {
+    this.runner = setInterval(() => { this.updateGif(this.gifContext); console.log('update'); }, this.interval);
+  }
+
   private updateGif(gifContext: string): void {
-    this.gifService.getNext(gifContext, data => {
-      this.gif.nativeElement.style.backgroundImage = 'URL("' + data.images.original.url + '")';
-    });
+    this.gifProvider.get().retrieveGif(gifContext).subscribe((url) => {
+      this.showGif(url);
+    })
+  }
+
+  private showGif(src: string) {
+    this.gif.nativeElement.style.backgroundImage = 'URL("' + src + '")';
   }
 }
