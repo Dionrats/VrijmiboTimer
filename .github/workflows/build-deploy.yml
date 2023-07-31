@@ -10,6 +10,9 @@ on:
 permissions:
   contents: write
 
+env:
+  PAGES_REPO: Dionrats/Dionrats.github.io
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -33,6 +36,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
@@ -43,6 +47,7 @@ jobs:
         with:
           folder: vrijmibo
           clean: true
+          token: ${{ secrets.DEPLOY_TOKEN }}
           ssh-key: ${{ secrets.DEPLOY_KEY }}
           repository-name: ${{ env.PAGES_REPO }}
 
