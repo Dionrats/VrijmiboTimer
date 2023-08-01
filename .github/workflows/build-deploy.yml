@@ -29,7 +29,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: vrijmibo
-        path: dist/vrijmibo-timer
+        path: dist/VrijmiboTimer
 
   deploy:
     concurrency: ci-${{ github.ref }}
