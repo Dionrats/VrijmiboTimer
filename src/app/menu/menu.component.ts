@@ -8,8 +8,6 @@ import { GifChoiceConstant } from '../models/gif-choice-constant';
 
 @Component({
   selector: 'app-menu',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.sass']
 })
@@ -17,6 +15,7 @@ export class MenuComponent {
 
   @ViewChild('sidenav', { static: false })
   public sidenav: ElementRef;
+
   public customClock: Clock;
 
   public clocks: Clock[] = [
@@ -63,8 +62,7 @@ export class MenuComponent {
         second: 0
       }
     }
-    console.log(this.customClock)
-    console.log(newClock)
+
     this.optionsService.currentClock.next(this.customClock);
   }
 

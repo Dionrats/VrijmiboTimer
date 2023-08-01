@@ -1,13 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Clock } from '../models/clock.model';
 import { DayService } from '../services/day.service';
 import { OptionsService } from '../services/options.service';
 
 @Component({
   selector: 'app-title',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './title.component.html',
   styleUrls: ['./title.component.sass']
 })

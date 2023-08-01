@@ -1,12 +1,9 @@
 import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Timer } from '../models/timer.model';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-timer',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './timer.component.html',
   styleUrls: ['./timer.component.sass']
 })

@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { giphyResponse } from '../models/giphyResponse.model';
 import { GiphyResponseDataPartial } from '../models/giphyResponseDataPartial.model';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators'
 import { IGifRetriever } from './igif-retriever';
 
 @Injectable({

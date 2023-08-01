@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { OptionsService } from '../services/options.service';
 import { GifChoiceConstant } from '../models/gif-choice-constant';
 import { DikkeLeoService } from '../services/dikke-leo.service';
@@ -7,8 +6,6 @@ import { GifProviderService } from '../services/gif-provider.service';
 
 @Component({
   selector: 'app-background',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './background.component.html',
   styleUrls: ['./background.component.sass']
 })
