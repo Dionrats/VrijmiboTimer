@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Clock } from '../models/clock.model';
 import { DayService } from '../services/day.service';
@@ -11,12 +11,16 @@ import { GifChoiceConstant } from '../models/gif-choice-constant';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.sass']
 })
-export class MenuComponent {
+export class MenuComponent implements AfterViewInit {
 
   @ViewChild('sidenav', { static: false })
   public sidenav: ElementRef;
 
-  public customClock: Clock;
+  @ViewChild('hour')
+  public hourInput: ElementRef;
+
+  @ViewChild('minute')
+  public minuteInput: ElementRef;
 
   public clocks: Clock[] = [
     { name: 'Vrijmibo', target: { weekday: 5, hour: 16, minute: 30, second: 0 }, active: true },
@@ -30,6 +34,14 @@ export class MenuComponent {
 
   constructor(private dayService: DayService, private optionsService: OptionsService) { }
 
+  ngAfterViewInit(): void {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() + 5);
+
+    this.hourInput.nativeElement.value = now.getHours();
+    this.minuteInput.nativeElement.value = now.getMinutes();
+  }
+
   ngOnInit(): void {
   }
 
@@ -40,7 +52,6 @@ export class MenuComponent {
   public selectClock(clock: Clock): void {
     this.clocks.forEach(c => c.active = false);
     clock.active = true;
-    console.log(clock)
     this.optionsService.currentClock.next(clock);
   }
 
@@ -48,22 +59,14 @@ export class MenuComponent {
     this.optionsService.currentGifContext.next(gifContext);
   }
 
-  public updateTime(time: any) {
-    this.clocks.forEach(c => c.active = false);
-    let [hours, mins] = time.split(":");
-    this.customClock = { name: 'customClock', target: { weekday: this.dayService.getCurrentDayIndex(), hour: hours, minute: mins, second: 0 }, active: true };
-    let newClock = {
-      name: 'customClock',
-      active: true,
-      target: {
-        weekday: this.dayService.getCurrentDayIndex(),
-        hour: hours,
-        minute: mins,
-        second: 0
-      }
-    }
+  public setTime() {
+    const hour = parseInt((this.hourInput.nativeElement as HTMLInputElement).value);
+    const minute = parseInt((this.minuteInput.nativeElement as HTMLInputElement).value)
 
-    this.optionsService.currentClock.next(this.customClock);
+    if (hour && minute) {
+      this.clocks.forEach(c => c.active = false);
+      this.optionsService.currentClock.next({ name: 'customClock', target: { weekday: this.dayService.getCurrentDayIndex(), hour, minute, second: 0 }, active: true });
+    }
   }
 
   public resetClock() {
@@ -77,4 +80,7 @@ export class MenuComponent {
     this.optionsService.currentGifChoice.next(gifChoice.name);
   }
 
+  public isGiphy(): boolean {
+    return this.gifChoices.find((c) => c.active).name === GifChoiceConstant.Giphy;
+  }
 }

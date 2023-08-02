@@ -20,7 +20,11 @@
         <li>
             <a href="#gifSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Gifs</a>
             <ul class="collapse list-unstyled" id="gifSubmenu">
-                <li>
+                <li *ngFor="let gifChoice of gifChoices" (click)="selectGifChoice(gifChoice)">
+                    <a href="#" class="active" *ngIf="gifChoice.active;else notactive">{{gifChoice.name}}</a>
+                    <ng-template #notactive><a href="#" #notactive>{{gifChoice.name}}</a></ng-template>
+                </li>
+                <li *ngIf="isGiphy()">
                     <a href="#">search
                         <input #gifSearch type="text" (keyup.enter)="updateGifContext(gifSearch.value)"
                             (blur)="updateGifContext(gifSearch.value)">
@@ -32,23 +36,25 @@
             <a href="#tijdSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Tijd</a>
             <ul class="collapse list-unstyled" id="tijdSubmenu">
                 <li>
-                    <a href="#">Select a time HH:mm
-                        <input #timeInput type="time" id="time" name="time" (keyup.enter)="updateTime(timeInput.value)">
-                    </a>
-                </li>
-                <li>
                     <a href="#">
-                        <button type="button" (click)="resetClock()">Reset klok</button>
+                        <div class="customTimeHolder">
+                            Zet een tijd (HH:mm)
+                            <div class="timeRow">
+                                Uur
+                                <input #hour type="number" id="hour" name="hour" min="0" max="23" >
+                            </div>
+                            <div class="timeRow">
+                                Minuut
+                                <input #minute type="number" id="minute" name="minute" min="0" max="59" >
+                            </div>
+                            <div class="timeRow">
+                                <button type="button" class="btn btn-primary btn-sm" (click)="resetClock()">Reset klok</button>
+                                <button type="button" class="btn btn-primary btn-sm" (click)="setTime()">Zet klok</button>
+                            </div>
+
+                            <!-- <input #timeInput type="time" id="time" name="time" (keyup.enter)="updateTime(timeInput.value)"> -->
+                        </div>
                     </a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a href="#gifChoiceSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Gif</a>
-            <ul class="collapse list-unstyled" id="gifChoiceSubmenu">
-                <li *ngFor="let gifChoice of gifChoices" (click)="selectGifChoice(gifChoice)">
-                    <a href="#" class="active" *ngIf="gifChoice.active;else notactive">{{gifChoice.name}}</a>
-                    <ng-template #notactive><a href="#" #notactive>{{gifChoice.name}}</a></ng-template>
                 </li>
             </ul>
         </li>
