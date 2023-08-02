@@ -1,4 +1,4 @@
 export enum GifChoiceConstant {
-    Personal = 'Personal',
+    Personal = 'Den Bosch',
     Giphy = 'Giphy'
 }
