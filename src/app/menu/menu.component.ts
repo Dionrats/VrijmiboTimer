@@ -1,10 +1,10 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Clock } from '../models/clock.model';
 import { DayService } from '../services/day.service';
 import { OptionsService } from '../services/options.service';
 import { GifChoice } from '../models/gif-choice';
 import { GifChoiceConstant } from '../models/gif-choice-constant';
+import * as crypto from 'crypto-js';
 
 @Component({
   selector: 'app-menu',
@@ -31,6 +31,9 @@ export class MenuComponent implements AfterViewInit {
     { name: GifChoiceConstant.Personal, active: false },
     { name: GifChoiceConstant.Giphy, active: true}
   ];
+
+  private passwordDb = "ed053874ca199cc53e11c9f4aeaeccd07da652d1c19e3cbdbad5fd9fadba2532";
+  public locked = true;
 
   constructor(private dayService: DayService, private optionsService: OptionsService) { }
 
@@ -75,12 +78,27 @@ export class MenuComponent implements AfterViewInit {
   }
 
   public selectGifChoice(gifChoice: GifChoice) {
+    if (this.locked && gifChoice.name == GifChoiceConstant.Personal) {
+      const password = window.prompt("Wachtwoord").trim();
+      const pwHash = this.getHash(password);
+      if (pwHash === this.passwordDb) {
+        this.locked = false;
+      } else {
+        return;
+      }
+    }
+
     this.gifChoices.forEach(g => g.active = false);
     gifChoice.active = true;
+
     this.optionsService.currentGifChoice.next(gifChoice.name);
   }
 
   public isGiphy(): boolean {
     return this.gifChoices.find((c) => c.active).name === GifChoiceConstant.Giphy;
+  }
+
+  private getHash(input: string): string {
+    return crypto.SHA256(input).toString()
   }
 }

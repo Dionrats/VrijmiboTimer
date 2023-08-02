@@ -20,6 +20,7 @@ export class BackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
   private dikkeLeoRunner: any;
 
   public currentGifProvider: string;
+  public dbGif = GifChoiceConstant.Personal;
 
   constructor(private gifProvider: GifProviderService, private optionsService: OptionsService, private dikkeLeoService: DikkeLeoService) {
     this.dikkeLeoService.getClickEvent().subscribe(()=>{
