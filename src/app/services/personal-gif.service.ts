@@ -16,8 +16,7 @@ export class PersonalGifService implements IGifRetriever {
     '/assets/personalgifs/7.gif',
     '/assets/personalgifs/8.gif',
     '/assets/personalgifs/9.gif',
-    '/assets/personalgifs/10.gif',
-    '/assets/personalgifs/11.gif'
+    '/assets/personalgifs/10.gif'
   ]
 
   constructor() { }
