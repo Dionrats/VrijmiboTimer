@@ -6,23 +6,14 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class PersonalGifService implements IGifRetriever {
-  private personalGifs: string[] = [
-    '/assets/personalgifs/1.gif',
-    '/assets/personalgifs/2.gif',
-    '/assets/personalgifs/3.gif',
-    '/assets/personalgifs/4.gif',
-    '/assets/personalgifs/5.gif',
-    '/assets/personalgifs/6.gif',
-    '/assets/personalgifs/7.gif',
-    '/assets/personalgifs/8.gif',
-    '/assets/personalgifs/9.gif',
-    '/assets/personalgifs/10.gif'
-  ]
+  private basePath = '/assets/personalgifs/'
+  private gifCount = 21;
 
   constructor() { }
 
   retrieveGif(context?: string): Observable<string> {
-    var number = Math.floor(Math.random() * this.personalGifs.length);
-    return of(this.personalGifs[number]);
+    let number = Math.floor(Math.random() * this.gifCount);
+    number = number == 0 ? 1 : number;
+    return of(this.basePath + number + ".gif");
   }
 }
