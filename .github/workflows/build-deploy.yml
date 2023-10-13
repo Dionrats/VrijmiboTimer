@@ -1,0 +1,58 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Build & Deploy
+
+on:
+  push:
+    branches: [ "master" ]
+
+permissions:
+  contents: write
+
+env:
+  PAGES_REPO: Dionrats/Dionrats.github.io
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16.1.x'
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present
+    - name: Publish Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: vrijmibo
+        path: dist/VrijmiboTimer
+
+  deploy:
+    concurrency: ci-${{ github.ref }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Override default env variable
+        run: |
+          echo "PAGES_REPO=${{ vars.PAGES_REPO }}" >> $GITHUB_ENV
+        if: vars.PAGES_REPO != ''
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: vrijmibo
+          path: vrijmibo
+      - name: Deploy artifact to ${{ env.PAGES_REPO }}
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: vrijmibo
+          clean: true
+          token: ${{ secrets.DEPLOY_TOKEN }}
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
+          repository-name: ${{ env.PAGES_REPO }}
+
+

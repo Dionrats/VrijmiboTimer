@@ -1,10 +1,9 @@
-import { Component, ViewChild, ElementRef, OnInit, AfterViewInit, EventEmitter } from '@angular/core';
-import { Clock } from './models/clock.model';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
   title = 'vrijmibo';

@@ -1,36 +1,65 @@
 <nav #sidenav id="sidebar" class="active">
     <div class="sidebar-header">
-            <h4><br></h4>
-        </div>
+        <h4><br></h4>
+    </div>
 
-        <ul class="list-unstyled components">
-            <p>Opties</p>
-            <li class="active">
-                <a href="#klokSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">klokken</a>
-                <ul class="collapse list-unstyled" id="klokSubmenu">
-                    <li *ngFor="let clock of clocks" (click)="selectClock(clock)">
-                        <a href="#" class="active" *ngIf="clock.active;else notactive">{{clock.name}}</a>
-                        <ng-template #notactive><a href="#" #notactive>{{clock.name}}</a></ng-template>
-                    </li>
-                </ul>
-            </li>
-            <!-- <li>
+    <ul class="list-unstyled components">
+        <p>Opties</p>
+        <li class="active">
+            <a href="#klokSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Klokken</a>
+            <ul class="collapse list-unstyled" id="klokSubmenu">
+                <li *ngFor="let clock of clocks" (click)="selectClock(clock)">
+                    <a href="#" class="active" *ngIf="clock.active;else notactive">{{clock.name}}</a>
+                    <ng-template #notactive><a href="#" #notactive>{{clock.name}}</a></ng-template>
+                </li>
+            </ul>
+        </li>
+        <!-- <li>
                 <a href="#">About</a>
             </li> -->
-            <li>
-                <a href="#gifSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Gifs</a>
-                <ul class="collapse list-unstyled" id="gifSubmenu">
-                    <li>
-                        <a href="#">search 
-                            <input #gifSearch type="text" 
-                            (keyup.enter)="updateGifContext(gifSearch.value)"
+        <li>
+            <a href="#gifSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Gifs</a>
+            <ul class="collapse list-unstyled" id="gifSubmenu">
+                <li *ngFor="let gifChoice of gifChoices" (click)="selectGifChoice(gifChoice)">
+                    <a href="#" class="active" *ngIf="gifChoice.active;else notactive">{{gifChoice.name}}</a>
+                    <ng-template #notactive><a href="#" #notactive>{{gifChoice.name}}</a></ng-template>
+                </li>
+                <li *ngIf="isGiphy()">
+                    <a href="#">search
+                        <input #gifSearch type="text" (keyup.enter)="updateGifContext(gifSearch.value)"
                             (blur)="updateGifContext(gifSearch.value)">
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        <div class="poweredBy"></div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#tijdSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Tijd</a>
+            <ul class="collapse list-unstyled" id="tijdSubmenu">
+                <li>
+                    <a href="#">
+                        <div class="customTimeHolder">
+                            Zet een tijd (HH:mm)
+                            <div class="timeRow">
+                                Uur
+                                <input #hour type="number" id="hour" name="hour" min="0" max="23" >
+                            </div>
+                            <div class="timeRow">
+                                Minuut
+                                <input #minute type="number" id="minute" name="minute" min="0" max="59" >
+                            </div>
+                            <div class="timeRow">
+                                <button type="button" class="btn btn-primary btn-sm" (click)="resetClock()">Reset klok</button>
+                                <button type="button" class="btn btn-primary btn-sm" (click)="setTime()">Zet klok</button>
+                            </div>
+
+                            <!-- <input #timeInput type="time" id="time" name="time" (keyup.enter)="updateTime(timeInput.value)"> -->
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <div class="poweredBy"></div>
 </nav>
 <div id="content">
     <nav class="navbar navbar-dark bg-transparent">

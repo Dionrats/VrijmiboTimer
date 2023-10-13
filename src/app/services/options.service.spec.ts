@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ClockService } from './clock.service';
+import { OptionsService } from './options.service';
 
-describe('ClockService', () => {
-  let service: ClockService;
+describe('OptionsService', () => {
+  let service: OptionsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ClockService);
+    service = TestBed.inject(OptionsService);
   });
 
   it('should be created', () => {
