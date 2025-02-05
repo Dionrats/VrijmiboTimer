@@ -18,13 +18,16 @@ export class BackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
   private interval: number = 1 * 60 * 1000;
   private runner: any;
   private dikkeLeoRunner: any;
+  public dikkeLeoCheckboxChecked = false;
 
   public currentGifProvider: string;
   public dbGif = GifChoiceConstant.Personal;
 
   constructor(private gifProvider: GifProviderService, private optionsService: OptionsService, private dikkeLeoService: DikkeLeoService) {
+    this.optionsService.shouldPlayDikkeLeo.subscribe(shouldPlay => this.dikkeLeoCheckboxChecked = shouldPlay);
+
     this.dikkeLeoService.getClickEvent().subscribe(()=>{
-      if (this.currentGifProvider === GifChoiceConstant.Personal) {
+      if (this.currentGifProvider === GifChoiceConstant.Personal || this.dikkeLeoCheckboxChecked) {
         this.startDikkeLeo();
       }
     })
@@ -53,6 +56,7 @@ export class BackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public async startDikkeLeo() {
+    console.log('startDikkeLeo');
     clearInterval(this.runner);
     const vid = document.getElementById("myVideo") as HTMLMediaElement;
     vid.src = '/assets/sound/dikkeleo.mp4';
