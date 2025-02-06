@@ -1,9 +1,8 @@
-<div *ngIf="currentGifProvider === dbGif || dikkeLeoCheckboxChecked">
-  <video autoplay loop id="myVideo">
+  <video autoplay loop id="myVideo" *ngIf="currentGifProvider === dbGif || dikkeLeoCheckboxChecked">
     <div class="overlay"></div>
     Your browser does not support HTML5 video.
   </video>
-</div>
+
 
 <div #gif class="gif">
   <div class="overlay"></div>

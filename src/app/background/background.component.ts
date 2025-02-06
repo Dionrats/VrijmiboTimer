@@ -56,7 +56,6 @@ export class BackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public async startDikkeLeo() {
-    console.log('startDikkeLeo');
     clearInterval(this.runner);
     const vid = document.getElementById("myVideo") as HTMLMediaElement;
     vid.src = '/assets/sound/dikkeleo.mp4';
