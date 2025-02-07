@@ -22,6 +22,8 @@ export class MenuComponent implements AfterViewInit {
   @ViewChild('minute')
   public minuteInput: ElementRef;
 
+  public shouldPlayDikkeLeo = false;
+
   public clocks: Clock[] = [
     { name: 'Vrijmibo', target: { weekday: 5, hour: 16, minute: 30, second: 0 }, active: true },
     { name: 'Partytime', target: { weekday: this.dayService.getCurrentDayIndex(), hour: 16, minute: 30, second: 0 }, active: false },
@@ -46,6 +48,7 @@ export class MenuComponent implements AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.optionsService.shouldPlayDikkeLeo.subscribe(shouldPlay => this.shouldPlayDikkeLeo = shouldPlay);
   }
 
   public toggleMenu(): void {
@@ -92,6 +95,14 @@ export class MenuComponent implements AfterViewInit {
     gifChoice.active = true;
 
     this.optionsService.currentGifChoice.next(gifChoice.name);
+    if(gifChoice.name === GifChoiceConstant.Personal) {
+      this.optionsService.shouldPlayDikkeLeo.next(true);
+    }
+  }
+
+  public updateShouldPlayDikkeLeo(shouldPlay: boolean): void {
+    this.shouldPlayDikkeLeo = shouldPlay;
+    this.optionsService.shouldPlayDikkeLeo.next(shouldPlay);
   }
 
   public isGiphy(): boolean {

@@ -16,6 +16,7 @@ import { OptionsService } from './services/options.service';
 import { DikkeLeoService } from './services/dikke-leo.service';
 import { GifProviderService } from './services/gif-provider.service';
 import { PersonalGifService } from './services/personal-gif.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { PersonalGifService } from './services/personal-gif.service';
   imports: [
     BrowserModule,
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     DayService,
