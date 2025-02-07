@@ -36,13 +36,13 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
       - name: Override default env variable
         run: |
           echo "PAGES_REPO=${{ vars.PAGES_REPO }}" >> $GITHUB_ENV
         if: vars.PAGES_REPO != ''
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: vrijmibo
           path: vrijmibo
