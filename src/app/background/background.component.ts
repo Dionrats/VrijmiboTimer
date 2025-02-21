@@ -19,6 +19,7 @@ export class BackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
   private runner: any;
   private dikkeLeoRunner: any;
   public dikkeLeoCheckboxChecked = false;
+  public dikkeLeoActive = false;
 
   public currentGifProvider: string;
   public dbGif = GifChoiceConstant.Personal;
@@ -28,15 +29,13 @@ export class BackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.dikkeLeoService.getClickEvent().subscribe(() => {
       if (this.currentGifProvider === GifChoiceConstant.Personal || this.dikkeLeoCheckboxChecked) {
+        this.dikkeLeoActive = true;
         this.startDikkeLeo();
       }
     })
   }
 
   ngOnInit(): void {
-  }
-  isDikkeLeoPlaying(): boolean {
-    return this.currentGifProvider === GifChoiceConstant.Personal || this.dikkeLeoCheckboxChecked;
   }
 
   ngAfterViewInit(): void {
