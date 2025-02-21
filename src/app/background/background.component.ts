@@ -10,6 +10,7 @@ import { OptionsService } from '../services/options.service';
   styleUrls: ['./background.component.sass']
 })
 export class BackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
+  
 
   @ViewChild('gif', { static: false })
   gif: ElementRef;
@@ -33,9 +34,11 @@ export class BackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
     })
   }
 
+
   ngOnInit(): void {
   }
   isDikkeLeoPlaying(): boolean {
+    console.log("holy shit wat een code niet normaal");
     return this.currentGifProvider === GifChoiceConstant.Personal || this.dikkeLeoCheckboxChecked;
   }
 
