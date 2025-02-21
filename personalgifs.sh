@@ -11,15 +11,16 @@ fi
 
 # Find all .gif files in the directory
 gifFiles=$(find "$gifsDirectory" -type f -name "*.gif" -exec basename {} \;)
+echo $gifFiles
 
 # Create a JSON object
-jsonObject="gifs\":["
+jsonObject="\"gifs\":["
 for gif in $gifFiles; do
-  jsonObject+="\"$gif\","
+  jsonObject="$jsonObject\"$gif\","
 done
 
 # Remove the trailing comma and close the JSON array
-jsonObject="{\"${jsonObject%,}]}"
+jsonObject="{${jsonObject%,}]}"
 
 # Write the JSON object to the output file
 echo "$jsonObject" > "$outputFilePath"
