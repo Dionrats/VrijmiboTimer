@@ -131,11 +131,12 @@
           <a href="#">
               <label for="dikkeLeoSwitch">Speel Dikke Leo</label>
               <input
+                #switch
                 class="switch"
                 [(ngModel)]="shouldPlayDikkeLeo"
                 type="checkbox"
                 id="dikkeLeoSwitch"
-                (change)="updateShouldPlayDikkeLeo($event.target.checked)"
+                (change)="updateShouldPlayDikkeLeo(switch.checked)"
               />
           </a>
         </li>
