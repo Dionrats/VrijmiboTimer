@@ -1,10 +1,9 @@
-  <video autoplay loop id="myVideo" *ngIf="currentGifProvider === dbGif || dikkeLeoCheckboxChecked">
-    <div class="overlay"></div>
-    Your browser does not support HTML5 video.
-  </video>
+<video autoplay loop id="myVideo" *ngIf="isDikkeLeoPlaying()">
+  <div class="overlay"></div>
+  Your browser does not support HTML5 video.
+</video>
 
 
 <div #gif class="gif">
   <div class="overlay"></div>
 </div>
-
