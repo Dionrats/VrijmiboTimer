@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { OptionsService } from '../services/options.service';
 import { GifChoiceConstant } from '../models/gif-choice-constant';
 import { DikkeLeoService } from '../services/dikke-leo.service';
 import { GifProviderService } from '../services/gif-provider.service';
-import { OptionsService } from '../services/options.service';
 
 @Component({
   selector: 'app-background',
@@ -18,18 +18,13 @@ export class BackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
   private interval: number = 1 * 60 * 1000;
   private runner: any;
   private dikkeLeoRunner: any;
-  public dikkeLeoCheckboxChecked = false;
-  public dikkeLeoActive = false;
 
   public currentGifProvider: string;
   public dbGif = GifChoiceConstant.Personal;
 
   constructor(private gifProvider: GifProviderService, private optionsService: OptionsService, private dikkeLeoService: DikkeLeoService) {
-    this.optionsService.shouldPlayDikkeLeo.subscribe(shouldPlay => this.dikkeLeoCheckboxChecked = shouldPlay);
-
-    this.dikkeLeoService.getClickEvent().subscribe(() => {
-      if (this.currentGifProvider === GifChoiceConstant.Personal || this.dikkeLeoCheckboxChecked) {
-        this.dikkeLeoActive = true;
+    this.dikkeLeoService.getClickEvent().subscribe(()=>{
+      if (this.currentGifProvider === GifChoiceConstant.Personal) {
         this.startDikkeLeo();
       }
     })
