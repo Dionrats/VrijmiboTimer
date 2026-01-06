@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { OptionsService } from '../services/options.service';
 import { GifChoiceConstant } from '../models/gif-choice-constant';
-import { DikkeLeoService } from '../services/dikke-leo.service';
+import { videoService } from '../services/video.service';
 import { GifProviderService } from '../services/gif-provider.service';
 
 @Component({
@@ -17,15 +17,15 @@ export class BackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
   private gifContext = 'cheers';
   private interval: number = 1 * 60 * 1000;
   private runner: any;
-  private dikkeLeoRunner: any;
+  private videoRunner: any;
 
   public currentGifProvider: string;
   public dbGif = GifChoiceConstant.Personal;
 
-  constructor(private gifProvider: GifProviderService, private optionsService: OptionsService, private dikkeLeoService: DikkeLeoService) {
-    this.dikkeLeoService.getClickEvent().subscribe(()=>{
+  constructor(private gifProvider: GifProviderService, private optionsService: OptionsService, private videoService: videoService) {
+    this.videoService.getClickEvent().subscribe(()=>{
       if (this.currentGifProvider === GifChoiceConstant.Personal) {
-        this.startDikkeLeo();
+        this.startVideo();
       }
     })
   }
@@ -52,20 +52,20 @@ export class BackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
     clearInterval(this.runner);
   }
 
-  public async startDikkeLeo() {
+  public async startVideo() {
     clearInterval(this.runner);
     const vid = document.getElementById("myVideo") as HTMLMediaElement;
-    vid.src = '/assets/sound/dikkeleo.mp4';
+    vid.src = '/assets/sound/Joost.mp4#t=8';
     await vid.play();
 
-    this.dikkeLeoRunner = setTimeout(() => {
+    this.videoRunner = setTimeout(() => {
       vid.pause();
       vid.currentTime = 0;
       vid.src = null;
 
       this.setTimer();
       this.updateGif(this.gifContext);
-      clearTimeout(this.dikkeLeoRunner);
+      clearTimeout(this.videoRunner);
     }, 200000);
   }
 

@@ -13,7 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DayService } from './services/day.service';
 import { HeartbeatService } from './services/heartbeat.service';
 import { OptionsService } from './services/options.service';
-import { DikkeLeoService } from './services/dikke-leo.service';
+import { videoService } from './services/video.service';
 import { GifProviderService } from './services/gif-provider.service';
 import { PersonalGifService } from './services/personal-gif.service';
 
@@ -35,7 +35,7 @@ import { PersonalGifService } from './services/personal-gif.service';
     DayService,
     HeartbeatService,
     OptionsService,
-    DikkeLeoService,
+    videoService,
     GifProviderService,
     PersonalGifService
   ],
