@@ -5,7 +5,7 @@ import { Clock } from '../models/clock.model';
 import { Timer } from '../models/timer.model';
 import { HeartbeatService } from '../services/heartbeat.service';
 import { OptionsService } from '../services/options.service';
-import { DikkeLeoService } from '../services/dikke-leo.service';
+import { videoService } from '../services/video.service';
 
 @Component({
     selector: 'app-clock',
@@ -29,7 +29,7 @@ export class ClockComponent {
     {title: 'seconden', max: 60, color: '#7895d5', heartbeat: this.heartbeatService.secHeartbeat}
   ];
 
-  constructor(private heartbeatService: HeartbeatService, private optionsService: OptionsService, private dikkeLeoService: DikkeLeoService) {}
+  constructor(private heartbeatService: HeartbeatService, private optionsService: OptionsService, private videoService: videoService) {}
 
   ngOnInit(): void {
   }
@@ -56,7 +56,7 @@ export class ClockComponent {
     audio.load();
     audio.play();
     setTimeout(() => {
-      this.dikkeLeoService.sendClickEvent();
+      this.videoService.sendClickEvent();
     }, 2000);
   }
 
