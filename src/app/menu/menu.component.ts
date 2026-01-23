@@ -23,8 +23,8 @@ export class MenuComponent implements AfterViewInit {
   public minuteInput: ElementRef;
 
   public clocks: Clock[] = [
-    { name: 'Vrijmibo', target: { weekday: 5, hour: 16, minute: 30, second: 0 }, active: true },
-    { name: 'Partytime', target: { weekday: this.dayService.getCurrentDayIndex(), hour: 16, minute: 30, second: 0 }, active: false },
+    { name: 'Vrijmibo', target: { weekday: 5, hour: 16, minute: 0, second: 0 }, active: true },
+    { name: 'Partytime', target: { weekday: this.dayService.getCurrentDayIndex(), hour: 16, minute: 0, second: 0 }, active: false },
   ];
 
   public gifChoices: GifChoice[] = [
@@ -32,7 +32,7 @@ export class MenuComponent implements AfterViewInit {
     { name: GifChoiceConstant.Giphy, active: true}
   ];
 
-  private passwordDb = "ed053874ca199cc53e11c9f4aeaeccd07da652d1c19e3cbdbad5fd9fadba2532";
+  private passwordDb = "ed053874ca199cc53e11c9f4aeaeccd07da652d1c19e3cbdbad5fd9fadba2532"; // wtf
   public locked = true;
 
   constructor(private dayService: DayService, private optionsService: OptionsService) { }
