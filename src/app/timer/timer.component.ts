@@ -11,6 +11,7 @@ export class TimerComponent {
 
   @Input('timer') timer: Timer;
   state: number;
+  ticking = false;
   subscription: Subscription;
 
   @ViewChild('circle', {static: false})
@@ -42,7 +43,12 @@ export class TimerComponent {
     }
     this.subscription = this.timer.heartbeat.subscribe(x => {
       this.state = x;
+      this.ticking = true;
       this.changeDetectorRef.detectChanges();
+      setTimeout(() => {
+        this.ticking = false;
+        this.changeDetectorRef.detectChanges();
+      }, 250);
       return this.state;
     });
   }

@@ -1,38 +1,43 @@
-.clock-item 
-    .inner 
-        height: 100%
+@keyframes bump
+    0%
+        transform: scale(1)
+    50%
+        transform: scale(1.25)
+    100%
+        transform: scale(1)
+
+.clock-item
+    padding: 8px
+
+    .inner
         padding-bottom: 100%
         position: relative
         width: 100%
         background-color: rgba(255, 255, 255, .1)
         border-radius: 50%
 
-// .clock-canvas 
-    
-//     // border: 5px solid red
-//     height: 0px
-//     padding-bottom: 100%
-
-
-        
-
-.text 
+.text
     color: #fff
-    font-size: 30px
     font-weight: bold
-    margin-top: -50px
     position: absolute
     top: 50%
+    transform: translateY(-50%)
     text-align: center
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 1)
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.7), 1px 1px 2px rgba(0, 0, 0, 1)
     width: 100%
 
-    .val 
-        font-size: 50px
+    .val
+        font-size: 56px
+        margin: 0
+        display: inline-block
+        &.ticking
+            animation: bump 0.25s ease-out
 
-    .type-time 
-        font-size: 20px
-
+    .type-time
+        font-size: 18px
+        margin: 0
+        letter-spacing: 0.1em
+        text-transform: uppercase
 
 .progress-ring
     position: absolute
@@ -40,7 +45,8 @@
     left: 0
     height: 100%
     width: 100%
+
     .progress-ring__circle
-        transition: stroke-dashoffset 0.25s
+        transition: stroke-dashoffset 0.35s
         transform: rotate(-90deg)
         transform-origin: 50% 50%

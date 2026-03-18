@@ -53,17 +53,22 @@ export class ClockComponent {
   }
 
   public soundAlarm(): void {
-    const audio: HTMLAudioElement = new Audio('/assets/sound/Air-Horn-Sound-Effect.mp3');
+    const audio: HTMLAudioElement = new Audio('/assets/sound/sound_effect.mp3');
+
+    audio.addEventListener('ended', () => {
+      this.videoService.sendClickEvent();
+    });
+
     const playPromise = audio.play();
     if (playPromise !== undefined) {
       playPromise.catch(() => {
-        // Autoplay was blocked (no recent user gesture); retry once after a short delay
-        setTimeout(() => audio.play().catch(() => {}), 1000);
+        setTimeout(() => {
+          audio.play().catch(() => {
+            this.videoService.sendClickEvent();
+          });
+        }, 1000);
       });
     }
-    setTimeout(() => {
-      this.videoService.sendClickEvent();
-    }, 2000);
   }
 
   public startClock(): void {
