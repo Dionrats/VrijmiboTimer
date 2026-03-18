@@ -37,6 +37,9 @@ export class TimerComponent {
   }
 
   public run(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
     this.subscription = this.timer.heartbeat.subscribe(x => {
       this.state = x;
       this.changeDetectorRef.detectChanges();

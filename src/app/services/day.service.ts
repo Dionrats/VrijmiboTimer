@@ -26,7 +26,7 @@ export class DayService {
         return 'VRIJMIBO';
       case 6:
         return 'ZAMIBO';
-      case 7:
+      case 0:
         return 'ZOMIBO';
       default:
         return '';

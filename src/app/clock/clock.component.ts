@@ -18,6 +18,7 @@ export class ClockComponent {
   timerComponents: TimerComponent[];
 
   private done: Subscription;
+  private clockSub: Subscription;
   private isFinished: Boolean;
 
   public clock: Clock = {name: 'Vrijmibo', target: {weekday: 5, hour: 16, minute: 30, second: 0}, active: true};
@@ -40,6 +41,7 @@ export class ClockComponent {
 
   ngOnDestroy(): void {
     this.done.unsubscribe();
+    if (this.clockSub) { this.clockSub.unsubscribe(); }
   }
 
   private finished(): void {
@@ -51,10 +53,14 @@ export class ClockComponent {
   }
 
   public soundAlarm(): void {
-    const audio: HTMLAudioElement = new Audio();
-    audio.src = '/assets/sound/Air-Horn-Sound-Effect.mp3';
-    audio.load();
-    audio.play();
+    const audio: HTMLAudioElement = new Audio('/assets/sound/Air-Horn-Sound-Effect.mp3');
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // Autoplay was blocked (no recent user gesture); retry once after a short delay
+        setTimeout(() => audio.play().catch(() => {}), 1000);
+      });
+    }
     setTimeout(() => {
       this.videoService.sendClickEvent();
     }, 2000);
@@ -64,7 +70,11 @@ export class ClockComponent {
     this.isFinished = false;
     this.done = this.heartbeatService.doneEvent.subscribe(() => this.finished());
     this.heartbeatService.start(this.clock.target);
-    this.optionsService.currentClock.subscribe(clock => {
+    this.clockSub = this.optionsService.currentClock.subscribe(clock => {
+      this.stopClock();
+      this.isFinished = false;
+      if (this.done) { this.done.unsubscribe(); }
+      this.done = this.heartbeatService.doneEvent.subscribe(() => this.finished());
       this.heartbeatService.start(clock.target);
       this.timerComponents.forEach(timer => timer.run());
     });

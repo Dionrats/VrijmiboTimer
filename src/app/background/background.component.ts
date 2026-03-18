@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { OptionsService } from '../services/options.service';
 import { GifChoiceConstant } from '../models/gif-choice-constant';
 import { videoService } from '../services/video.service';
@@ -14,10 +15,15 @@ export class BackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('gif', { static: false })
   gif: ElementRef;
 
+  public videoUrl = '/assets/sound/Joost.mp4';
+  public videoStartTime = 8;
+
   private gifContext = 'cheers';
   private interval: number = 1 * 60 * 1000;
   private runner: any;
-  private videoRunner: any;
+  private gifContextSub: Subscription;
+  private gifChoiceSub: Subscription;
+  private videoSub: Subscription;
 
   public currentGifProvider: string;
   public dbGif = GifChoiceConstant.Personal;
@@ -35,42 +41,52 @@ export class BackgroundComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.updateGif(this.gifContext);
-    this.optionsService.currentGifContext.subscribe(newGifContext => {
+    this.gifContextSub = this.optionsService.currentGifContext.subscribe(newGifContext => {
       this.gifContext = newGifContext;
       this.updateGif(this.gifContext);
     });
-    this.optionsService.currentGifChoice.subscribe(newGifChoice => {
+    this.gifChoiceSub = this.optionsService.currentGifChoice.subscribe(newGifChoice => {
       this.currentGifProvider = newGifChoice;
       this.gifProvider.set(newGifChoice);
       this.updateGif(this.gifContext);
-    })
+    });
+    this.videoSub = this.optionsService.currentVideo.subscribe(url => {
+      this.videoUrl = url;
+    });
+    this.optionsService.currentVideoStartTime.subscribe(seconds => {
+      this.videoStartTime = seconds;
+    });
 
     this.setTimer();
   }
 
   ngOnDestroy(): void {
     clearInterval(this.runner);
+    if (this.gifContextSub) { this.gifContextSub.unsubscribe(); }
+    if (this.gifChoiceSub) { this.gifChoiceSub.unsubscribe(); }
+    if (this.videoSub) { this.videoSub.unsubscribe(); }
   }
 
-  public async startVideo() {
+  public startVideo() {
     clearInterval(this.runner);
-    const vid = document.getElementById("myVideo") as HTMLMediaElement;
-    vid.src = '/assets/sound/Joost.mp4#t=8';
-    await vid.play();
+    const vid = document.getElementById('myVideo') as HTMLVideoElement;
 
-    this.videoRunner = setTimeout(() => {
-      vid.pause();
-      vid.currentTime = 0;
-      vid.src = null;
-
+    const onEnded = () => {
+      vid.removeEventListener('ended', onEnded);
+      vid.src = '';
+      vid.style.display = 'none';
       this.setTimer();
       this.updateGif(this.gifContext);
-      clearTimeout(this.videoRunner);
-    }, 200000);
+    };
+
+    vid.addEventListener('ended', onEnded);
+    vid.src = this.videoUrl + '#t=' + this.videoStartTime;
+    vid.style.display = 'block';
+    vid.play().catch(() => {});
   }
 
   private setTimer() {
-    this.runner = setInterval(() => { this.updateGif(this.gifContext); console.log('update'); }, this.interval);
+    this.runner = setInterval(() => { this.updateGif(this.gifContext); }, this.interval);
   }
 
   private updateGif(gifContext: string): void {

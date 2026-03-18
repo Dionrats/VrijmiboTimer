@@ -22,6 +22,9 @@ export class HeartbeatService {
   }
 
   public start(target: Target): void {
+    if (this.runner) {
+      clearInterval(this.runner);
+    }
     this.target = target;
     this.target.date = this.computeTargetDate();
     this.emitHeartbeat(true);
@@ -64,6 +67,12 @@ export class HeartbeatService {
      date.setHours(this.target.hour);
      date.setMinutes(this.target.minute);
      date.setSeconds(this.target.second);
+     date.setMilliseconds(0);
+
+     // If the computed date is in the past (same weekday, time already passed), move to next week
+     if (date <= new Date()) {
+       date.setDate(date.getDate() + 7);
+     }
 
      return date;
   }
