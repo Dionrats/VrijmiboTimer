@@ -53,7 +53,7 @@ export class ClockComponent {
   }
 
   public soundAlarm(): void {
-    const audio: HTMLAudioElement = new Audio('/assets/sound/sound_effect.mp3');
+    const audio: HTMLAudioElement = new Audio('/assets/sound/Air-Horn-Sound-Effect.mp3');
 
     audio.addEventListener('ended', () => {
       this.videoService.sendClickEvent();
