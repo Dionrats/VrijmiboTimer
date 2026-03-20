@@ -12,6 +12,8 @@ export class OptionsService {
   public currentClock: Subject<Clock> = new Subject();
   public currentGifContext: Subject<string> = new Subject();
   public currentGifChoice: Subject<GifChoiceConstant> = new Subject();
+  public currentVideo: Subject<string> = new Subject();
+  public currentVideoStartTime: Subject<number> = new Subject();
 
   constructor() { }
 }

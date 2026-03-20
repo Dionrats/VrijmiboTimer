@@ -32,6 +32,12 @@ export class MenuComponent implements AfterViewInit {
     { name: GifChoiceConstant.Giphy, active: true}
   ];
 
+  public videos = [
+    { label: 'Joost', path: '/assets/sound/Joost.mp4', startTime: 8 },
+    { label: 'Dikke Leo', path: '/assets/sound/dikkeleo.mp4', startTime: 0 },
+  ];
+  public selectedVideo = this.videos[0].path;
+
   private passwordDb = "ed053874ca199cc53e11c9f4aeaeccd07da652d1c19e3cbdbad5fd9fadba2532";
   public locked = true;
 
@@ -64,9 +70,9 @@ export class MenuComponent implements AfterViewInit {
 
   public setTime() {
     const hour = parseInt((this.hourInput.nativeElement as HTMLInputElement).value);
-    const minute = parseInt((this.minuteInput.nativeElement as HTMLInputElement).value)
+    const minute = parseInt((this.minuteInput.nativeElement as HTMLInputElement).value);
 
-    if (hour && minute) {
+    if (!isNaN(hour) && !isNaN(minute)) {
       this.clocks.forEach(c => c.active = false);
       this.optionsService.currentClock.next({ name: 'customClock', target: { weekday: this.dayService.getCurrentDayIndex(), hour, minute, second: 0 }, active: true });
     }
@@ -96,6 +102,17 @@ export class MenuComponent implements AfterViewInit {
 
   public isGiphy(): boolean {
     return this.gifChoices.find((c) => c.active).name === GifChoiceConstant.Giphy;
+  }
+
+  public isPersonal(): boolean {
+    return !this.locked && this.gifChoices.find((c) => c.active).name === GifChoiceConstant.Personal;
+  }
+
+  public selectVideo(path: string): void {
+    this.selectedVideo = path;
+    const video = this.videos.find(v => v.path === path);
+    this.optionsService.currentVideo.next(path);
+    this.optionsService.currentVideoStartTime.next(video.startTime);
   }
 
   private getHash(input: string): string {

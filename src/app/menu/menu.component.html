@@ -45,6 +45,21 @@
             />
           </a>
         </li>
+
+        <li *ngIf="isPersonal()">
+          <a href="#">
+            <div class="customTimeHolder">
+              Video
+              <div class="timeRow">
+                <select (change)="selectVideo($event.target['value'])">
+                  <option *ngFor="let video of videos" [value]="video.path" [selected]="video.path === selectedVideo">
+                    {{ video.label }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </a>
+        </li>
       </ul>
     </li>
 
